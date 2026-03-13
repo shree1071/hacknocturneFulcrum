@@ -1,0 +1,11 @@
+
+> medichain@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.12
+   - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 4.5s
+   Linting and checking validity of types ...
+Terminate batch job (Y/N)? 
