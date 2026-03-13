@@ -1,0 +1,1682 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "MediChain AI Backend",
+    "description": "AI-powered blockchain-secured medical record platform. Use /openapi.json for Requestly import.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/analyze-report": {
+      "post": {
+        "summary": "Analyze Report",
+        "operationId": "analyze_report_api_analyze_report_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/chat": {
+      "post": {
+        "summary": "Chat",
+        "operationId": "chat_api_chat_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tavus-video": {
+      "post": {
+        "summary": "Generate Video",
+        "operationId": "generate_video_api_tavus_video_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TavusRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get Video Status",
+        "operationId": "get_video_status_api_tavus_video_get",
+        "parameters": [
+          {
+            "name": "video_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Video Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tavus-conversation": {
+      "post": {
+        "summary": "Create Conversation",
+        "operationId": "create_conversation_api_tavus_conversation_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TavusConversationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/analyze-organ": {
+      "post": {
+        "summary": "Analyze Organ",
+        "operationId": "analyze_organ_api_analyze_organ_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrganRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/records/{wallet}": {
+      "get": {
+        "summary": "Get Records",
+        "description": "Return all analysis records for a given patient wallet address.",
+        "operationId": "get_records_api_records__wallet__get",
+        "parameters": [
+          {
+            "name": "wallet",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Wallet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/records/{record_id}": {
+      "delete": {
+        "summary": "Delete Record",
+        "description": "Delete an analysis record by ID.",
+        "operationId": "delete_record_api_records__record_id__delete",
+        "parameters": [
+          {
+            "name": "record_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Record Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Record",
+        "description": "Patch an analysis record (e.g. add tx_hash, IPFS data after upload).",
+        "operationId": "update_record_api_records__record_id__patch",
+        "parameters": [
+          {
+            "name": "record_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Record Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRecordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/records/check-cache": {
+      "post": {
+        "summary": "Check Cache",
+        "description": "Check if a record with the same file_name already exists for this wallet.",
+        "operationId": "check_cache_api_records_check_cache_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloneRecordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/records/clone": {
+      "post": {
+        "summary": "Clone Record",
+        "description": "Clone an existing analysis record (used for cached file re-uploads).",
+        "operationId": "clone_record_api_records_clone_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "type": "object",
+                "title": "Body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/access-grants/analysis/{analysis_id}": {
+      "get": {
+        "summary": "Get Access Grants",
+        "operationId": "get_access_grants_api_access_grants_analysis__analysis_id__get",
+        "parameters": [
+          {
+            "name": "analysis_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Analysis Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/access-grants": {
+      "post": {
+        "summary": "Grant Access",
+        "operationId": "grant_access_api_access_grants_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrantAccessRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/access-grants/revoke": {
+      "patch": {
+        "summary": "Revoke Access",
+        "operationId": "revoke_access_api_access_grants_revoke_patch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RevokeAccessRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/appointments/{wallet}": {
+      "get": {
+        "summary": "Get Appointments",
+        "description": "Return all appointments for a patient wallet, enriched with doctor names.",
+        "operationId": "get_appointments_api_appointments__wallet__get",
+        "parameters": [
+          {
+            "name": "wallet",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Wallet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/appointments/{appointment_id}/cancel": {
+      "patch": {
+        "summary": "Cancel Appointment",
+        "description": "Cancel an appointment by ID.",
+        "operationId": "cancel_appointment_api_appointments__appointment_id__cancel_patch",
+        "parameters": [
+          {
+            "name": "appointment_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Appointment Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/appointments/slots/{doctor_wallet}/{date}": {
+      "get": {
+        "summary": "Get Booked Slots",
+        "description": "Return booked slots for a specific doctor and date.",
+        "operationId": "get_booked_slots_api_appointments_slots__doctor_wallet___date__get",
+        "parameters": [
+          {
+            "name": "doctor_wallet",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doctor Wallet"
+            }
+          },
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/appointments": {
+      "post": {
+        "summary": "Create Appointment",
+        "description": "Create a new appointment request.",
+        "operationId": "create_appointment_api_appointments_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAppointmentRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/doctors": {
+      "get": {
+        "summary": "Get All Doctors",
+        "operationId": "get_all_doctors_api_doctors_get",
+        "parameters": [
+          {
+            "name": "specialty",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "Specialty"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/doctor/profile/{wallet}": {
+      "get": {
+        "summary": "Get Doctor Profile",
+        "operationId": "get_doctor_profile_api_doctor_profile__wallet__get",
+        "parameters": [
+          {
+            "name": "wallet",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Wallet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Upsert Doctor Profile",
+        "operationId": "upsert_doctor_profile_api_doctor_profile__wallet__post",
+        "parameters": [
+          {
+            "name": "wallet",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Wallet"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DoctorProfilePayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/doctor/grants/{wallet}": {
+      "get": {
+        "summary": "Get Doctor Grants",
+        "operationId": "get_doctor_grants_api_doctor_grants__wallet__get",
+        "parameters": [
+          {
+            "name": "wallet",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Wallet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/doctor/appointments/{wallet}": {
+      "get": {
+        "summary": "Get Doctor Appointments",
+        "operationId": "get_doctor_appointments_api_doctor_appointments__wallet__get",
+        "parameters": [
+          {
+            "name": "wallet",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Wallet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/doctor/appointments/{appointment_id}": {
+      "patch": {
+        "summary": "Update Appointment Status",
+        "operationId": "update_appointment_status_api_doctor_appointments__appointment_id__patch",
+        "parameters": [
+          {
+            "name": "appointment_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Appointment Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AppointmentStatusPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/doctor/notes/{doctor_wallet}/{patient_wallet}": {
+      "get": {
+        "summary": "Get Consultation Notes",
+        "operationId": "get_consultation_notes_api_doctor_notes__doctor_wallet___patient_wallet__get",
+        "parameters": [
+          {
+            "name": "doctor_wallet",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doctor Wallet"
+            }
+          },
+          {
+            "name": "patient_wallet",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Patient Wallet"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/doctor/notes/{doctor_wallet}": {
+      "post": {
+        "summary": "Add Consultation Note",
+        "operationId": "add_consultation_note_api_doctor_notes__doctor_wallet__post",
+        "parameters": [
+          {
+            "name": "doctor_wallet",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Doctor Wallet"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsultationNotePayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ipfs/upload": {
+      "post": {
+        "summary": "Upload To Ipfs",
+        "description": "Securely proxies the file upload to Pinata using backend credentials.\nAccepts multipart/form-data.",
+        "operationId": "upload_to_ipfs_api_ipfs_upload_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_to_ipfs_api_ipfs_upload_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/integrations/calendar/callback": {
+      "get": {
+        "summary": "Calendar Callback",
+        "description": "Proxy for Supabase Google Calendar OAuth callback edge function.",
+        "operationId": "calendar_callback_api_integrations_calendar_callback_get",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Code"
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "State"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/integrations/calendar/create": {
+      "post": {
+        "summary": "Calendar Create",
+        "description": "Proxy for Supabase calendar event creation edge function.",
+        "operationId": "calendar_create_api_integrations_calendar_create_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CalendarCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health Check",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnalyzeRequest": {
+        "properties": {
+          "file_base64": {
+            "type": "string",
+            "title": "File Base64"
+          },
+          "file_type": {
+            "type": "string",
+            "title": "File Type",
+            "default": "application/pdf"
+          },
+          "patient_wallet": {
+            "type": "string",
+            "title": "Patient Wallet"
+          },
+          "file_name": {
+            "type": "string",
+            "title": "File Name",
+            "default": "report"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file_base64",
+          "patient_wallet"
+        ],
+        "title": "AnalyzeRequest"
+      },
+      "AppointmentStatusPayload": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "AppointmentStatusPayload"
+      },
+      "Body_upload_to_ipfs_api_ipfs_upload_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File"
+          },
+          "pinataMetadata": {
+            "type": "string",
+            "title": "Pinatametadata"
+          },
+          "pinataOptions": {
+            "type": "string",
+            "title": "Pinataoptions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_to_ipfs_api_ipfs_upload_post"
+      },
+      "CalendarCreateRequest": {
+        "properties": {
+          "doctor_wallet": {
+            "type": "string",
+            "title": "Doctor Wallet"
+          }
+        },
+        "type": "object",
+        "required": [
+          "doctor_wallet"
+        ],
+        "title": "CalendarCreateRequest"
+      },
+      "ChatRequest": {
+        "properties": {
+          "patient_wallet": {
+            "type": "string",
+            "title": "Patient Wallet"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "patient_wallet",
+          "message"
+        ],
+        "title": "ChatRequest"
+      },
+      "CloneRecordRequest": {
+        "properties": {
+          "patient_wallet": {
+            "type": "string",
+            "title": "Patient Wallet"
+          },
+          "file_name": {
+            "type": "string",
+            "title": "File Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "patient_wallet",
+          "file_name"
+        ],
+        "title": "CloneRecordRequest"
+      },
+      "ConsultationNotePayload": {
+        "properties": {
+          "patient_wallet": {
+            "type": "string",
+            "title": "Patient Wallet"
+          },
+          "analysis_id": {
+            "type": "string",
+            "title": "Analysis Id"
+          },
+          "note": {
+            "type": "string",
+            "title": "Note"
+          }
+        },
+        "type": "object",
+        "required": [
+          "patient_wallet",
+          "analysis_id",
+          "note"
+        ],
+        "title": "ConsultationNotePayload"
+      },
+      "CreateAppointmentRequest": {
+        "properties": {
+          "patient_wallet": {
+            "type": "string",
+            "title": "Patient Wallet"
+          },
+          "doctor_wallet": {
+            "type": "string",
+            "title": "Doctor Wallet"
+          },
+          "date": {
+            "type": "string",
+            "title": "Date"
+          },
+          "time": {
+            "type": "string",
+            "title": "Time"
+          },
+          "reason": {
+            "type": "string",
+            "title": "Reason",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "patient_wallet",
+          "doctor_wallet",
+          "date",
+          "time"
+        ],
+        "title": "CreateAppointmentRequest"
+      },
+      "DoctorProfilePayload": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "specialty": {
+            "type": "string",
+            "title": "Specialty"
+          },
+          "bio": {
+            "type": "string",
+            "title": "Bio"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "specialty",
+          "bio"
+        ],
+        "title": "DoctorProfilePayload"
+      },
+      "GrantAccessRequest": {
+        "properties": {
+          "patient_wallet": {
+            "type": "string",
+            "title": "Patient Wallet"
+          },
+          "doctor_wallet": {
+            "type": "string",
+            "title": "Doctor Wallet"
+          },
+          "analysis_id": {
+            "type": "string",
+            "title": "Analysis Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "patient_wallet",
+          "doctor_wallet",
+          "analysis_id"
+        ],
+        "title": "GrantAccessRequest"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "OrganRequest": {
+        "properties": {
+          "organName": {
+            "type": "string",
+            "title": "Organname"
+          },
+          "analysisText": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Analysistext"
+          }
+        },
+        "type": "object",
+        "required": [
+          "organName",
+          "analysisText"
+        ],
+        "title": "OrganRequest"
+      },
+      "RevokeAccessRequest": {
+        "properties": {
+          "doctor_wallet": {
+            "type": "string",
+            "title": "Doctor Wallet"
+          },
+          "analysis_id": {
+            "type": "string",
+            "title": "Analysis Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "doctor_wallet",
+          "analysis_id"
+        ],
+        "title": "RevokeAccessRequest"
+      },
+      "TavusConversationRequest": {
+        "properties": {
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "risk_score": {
+            "type": "integer",
+            "title": "Risk Score"
+          },
+          "conditions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Conditions"
+          },
+          "specialist": {
+            "type": "string",
+            "title": "Specialist"
+          },
+          "urgency": {
+            "type": "string",
+            "title": "Urgency"
+          }
+        },
+        "type": "object",
+        "required": [
+          "summary",
+          "risk_score",
+          "conditions",
+          "specialist",
+          "urgency"
+        ],
+        "title": "TavusConversationRequest"
+      },
+      "TavusRequest": {
+        "properties": {
+          "summary": {
+            "type": "string",
+            "title": "Summary"
+          },
+          "risk_score": {
+            "type": "integer",
+            "title": "Risk Score",
+            "default": 50
+          },
+          "conditions": {
+            "anyOf": [
+              {
+                "items": {},
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conditions",
+            "default": []
+          },
+          "specialist": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Specialist"
+          },
+          "urgency": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Urgency",
+            "default": "low"
+          }
+        },
+        "type": "object",
+        "required": [
+          "summary"
+        ],
+        "title": "TavusRequest"
+      },
+      "UpdateRecordRequest": {
+        "properties": {
+          "tx_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tx Hash"
+          },
+          "record_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Record Id"
+          },
+          "file_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Url"
+          },
+          "file_fingerprint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Fingerprint"
+          },
+          "ipfs_cid": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ipfs Cid"
+          },
+          "encryption_iv": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Encryption Iv"
+          },
+          "organ_data": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organ Data"
+          }
+        },
+        "type": "object",
+        "title": "UpdateRecordRequest"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Infrastructure",
+      "description": "Health checks and system status"
+    },
+    {
+      "name": "AI Analysis",
+      "description": "Medical report analysis, chatbot, and organ-level AI insights"
+    },
+    {
+      "name": "Tavus AI Doctor",
+      "description": "AI-generated doctor video summaries and CVI conversations"
+    },
+    {
+      "name": "Medical Records",
+      "description": "Patient record CRUD, caching, and cloning"
+    },
+    {
+      "name": "Access Control",
+      "description": "RBAC-based access grants between patients and doctors"
+    },
+    {
+      "name": "Appointments",
+      "description": "Appointment booking, cancellation, and slot management"
+    },
+    {
+      "name": "Doctor Dashboard",
+      "description": "Doctor profiles, appointments, grants, and consultation notes"
+    },
+    {
+      "name": "IPFS",
+      "description": "Decentralized file storage via Pinata/IPFS"
+    },
+    {
+      "name": "Integrations",
+      "description": "Google Calendar OAuth and external service proxies"
+    }
+  ]
+}
