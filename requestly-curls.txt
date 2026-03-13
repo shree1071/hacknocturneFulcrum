@@ -1,0 +1,107 @@
+# Requestly 100% Foolproof Import
+
+If the Requestly JSON importer is broken on your machine, you can safely ignore it. 
+Requestly has a **cURL Import** feature that never fails.
+
+**How to use these:**
+1. Open Requestly Desktop.
+2. Click **Import** (top right) -> Select **cURL**.
+3. Copy one of the blocks below and paste it in.
+4. It will instantly create the perfect request.
+
+---
+
+### 1. 🏥 Health Check
+```bash
+curl -X GET "http://localhost:8000/health"
+```
+
+### 2. 🧠 Analyze Medical Report
+```bash
+curl -X POST "http://localhost:8000/api/analyze-report" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "file_base64": "JVBERi0...",
+    "file_type": "application/pdf",
+    "patient_wallet": "0xTestPatient123",
+    "file_name": "test_report.pdf"
+}'
+```
+
+### 3. 🧠 Chat with AI Assistant
+```bash
+curl -X POST "http://localhost:8000/api/chat" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "patient_wallet": "0xTestPatient123",
+    "message": "What does my report say about cholesterol?"
+}'
+```
+
+### 4. 🧠 Analyze Specific Organ
+```bash
+curl -X POST "http://localhost:8000/api/analyze-organ" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "organName": "Heart",
+    "analysisText": {"summary": "Elevated cholesterol", "risk_score": 62, "conditions": [], "biomarkers": {}, "specialist": "Cardiology", "urgency": "medium"}
+}'
+```
+
+### 5. 🎥 Generate Tavus AI Doctor Video
+```bash
+curl -X POST "http://localhost:8000/api/tavus-video" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "summary": "Patient exhibits anemia.",
+    "risk_score": 45,
+    "conditions": ["Anemia"],
+    "specialist": "Hematologist",
+    "urgency": "medium"
+}'
+```
+
+### 6. 🎥 Check Video Status
+```bash
+curl -X GET "http://localhost:8000/api/tavus-video?video_id=PLACEHOLDER_ID"
+```
+
+### 7. 📋 Get Patient Records
+```bash
+curl -X GET "http://localhost:8000/api/records/0xTestPatient123"
+```
+
+### 8. 🔐 Grant Access to Doctor
+```bash
+curl -X POST "http://localhost:8000/api/access-grants" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "patient_wallet": "0xTestPatient123",
+    "doctor_wallet": "0xTestDoctor456",
+    "analysis_id": "PLACEHOLDER_ANALYSIS_ID"
+}'
+```
+
+### 9. 📅 Create Appointment
+```bash
+curl -X POST "http://localhost:8000/api/appointments" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "patient_wallet": "0xTestPatient123",
+    "doctor_wallet": "0xTestDoctor456",
+    "date": "2026-04-15",
+    "time": "10:30",
+    "reason": "Follow up"
+}'
+```
+
+### 10. 👨‍⚕️ Update Doctor Consultation Note
+```bash
+curl -X POST "http://localhost:8000/api/doctor/notes/0xTestDoctor456" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "patient_wallet": "0xTestPatient123",
+    "analysis_id": "PLACEHOLDER_ANALYSIS_ID",
+    "note": "Dietary changes recommended."
+}'
+```
