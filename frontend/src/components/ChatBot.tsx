@@ -17,9 +17,17 @@ interface ChatBotProps {
     patientWallet: string;
 }
 
-// Lightweight markdown renderer – no external dependency
+// Robust markdown renderer – handles AI formatting quirks
 function renderMarkdown(text: string) {
-    const lines = text.split('\n');
+    // Pre-process: normalize AI quirks before parsing
+    // 1. Fix "*Text:" style bullets → "- **Text:**"
+    // 2. Fix "### *Title" → "### Title"
+    const normalized = text
+        .replace(/^(\s*)#{1,3}\s+\*([^*\n]+)/gm, (_, ws, title) => `${ws}### ${title.trim()}`)
+        .replace(/^\s+\*([A-Z][^*\n:]+:)/gm, '- **$1**')
+        .replace(/^\*([A-Z][^*\n:]+:)/gm, '- **$1**');
+
+    const lines = normalized.split('\n');
     const elements: React.ReactNode[] = [];
     let listItems: React.ReactNode[] = [];
     let listType: 'ul' | 'ol' | null = null;
@@ -39,15 +47,10 @@ function renderMarkdown(text: string) {
         let i = 0;
         while (remaining.length > 0) {
             const boldMatch = remaining.match(/^(.*?)\*\*(.+?)\*\*/);
-            const italicMatch = remaining.match(/^(.*?)\*(.+?)\*/);
-            if (boldMatch && (!italicMatch || boldMatch[0].length <= italicMatch[0].length)) {
+            if (boldMatch) {
                 if (boldMatch[1]) parts.push(<span key={i++}>{boldMatch[1]}</span>);
                 parts.push(<strong key={i++} className="font-bold text-gray-900">{boldMatch[2]}</strong>);
                 remaining = remaining.slice(boldMatch[0].length);
-            } else if (italicMatch) {
-                if (italicMatch[1]) parts.push(<span key={i++}>{italicMatch[1]}</span>);
-                parts.push(<em key={i++} className="italic">{italicMatch[2]}</em>);
-                remaining = remaining.slice(italicMatch[0].length);
             } else {
                 parts.push(<span key={i++}>{remaining}</span>);
                 break;
@@ -57,16 +60,28 @@ function renderMarkdown(text: string) {
     };
 
     lines.forEach((line, idx) => {
-        const ulMatch = line.match(/^[\*\-]\s+(.+)/);
-        const olMatch = line.match(/^\d+\.\s+(.+)/);
-        const h1Match = line.match(/^#\s+(.+)/);
-        const h2Match = line.match(/^##\s+(.+)/);
-        const h3Match = line.match(/^###\s+(.+)/);
-
-        // Create a unique key for each list item using index and content hash
+        const trimmed = line.trim();
         const uniqueKey = `${idx}-${line.length}-${line.charCodeAt(0) || 0}`;
 
-        if (ulMatch) {
+        // Headers (check longest match first)
+        const h3Match = trimmed.match(/^###\s+(.+)/);
+        const h2Match = !h3Match && trimmed.match(/^##\s+(.+)/);
+        const h1Match = !h2Match && !h3Match && trimmed.match(/^#\s+(.+)/);
+
+        // Lists
+        const ulMatch = trimmed.match(/^[-•]\s+(.+)/);
+        const olMatch = trimmed.match(/^\d+[\.\)]\s+(.+)/);
+
+        if (h3Match) {
+            flushList();
+            elements.push(<h5 key={uniqueKey} className="font-semibold text-gray-900 text-sm mb-0.5 mt-1">{parseInline(h3Match[1], uniqueKey)}</h5>);
+        } else if (h2Match) {
+            flushList();
+            elements.push(<h4 key={uniqueKey} className="font-semibold text-gray-900 text-sm mb-1 mt-2">{parseInline(h2Match[1], uniqueKey)}</h4>);
+        } else if (h1Match) {
+            flushList();
+            elements.push(<h3 key={uniqueKey} className="font-bold text-gray-900 text-base mb-1 mt-2">{parseInline(h1Match[1], uniqueKey)}</h3>);
+        } else if (ulMatch) {
             if (listType !== 'ul') flushList();
             listType = 'ul';
             listItems.push(<li key={uniqueKey}>{parseInline(ulMatch[1], uniqueKey)}</li>);
@@ -74,19 +89,11 @@ function renderMarkdown(text: string) {
             if (listType !== 'ol') flushList();
             listType = 'ol';
             listItems.push(<li key={uniqueKey}>{parseInline(olMatch[1], uniqueKey)}</li>);
+        } else if (trimmed === '') {
+            flushList();
         } else {
             flushList();
-            if (h1Match) {
-                elements.push(<h3 key={uniqueKey} className="font-bold text-gray-900 text-base mb-1 mt-2">{parseInline(h1Match[1], uniqueKey)}</h3>);
-            } else if (h2Match) {
-                elements.push(<h4 key={uniqueKey} className="font-semibold text-gray-900 text-sm mb-1 mt-2">{parseInline(h2Match[1], uniqueKey)}</h4>);
-            } else if (h3Match) {
-                elements.push(<h5 key={uniqueKey} className="font-semibold text-gray-900 text-sm mb-0.5 mt-1">{parseInline(h3Match[1], uniqueKey)}</h5>);
-            } else if (line.trim() === '') {
-                // skip blank lines but they implicitly separate paragraphs
-            } else {
-                elements.push(<p key={uniqueKey} className="mb-1.5 last:mb-0">{parseInline(line, uniqueKey)}</p>);
-            }
+            elements.push(<p key={uniqueKey} className="mb-1.5 last:mb-0">{parseInline(trimmed, uniqueKey)}</p>);
         }
     });
     flushList();
